@@ -63,7 +63,7 @@ class ShoppingMall extends Product {
       print('장바구니에 $showCartList 가 담겨있네요. 총 $totalPrice 원 입니다!');
 
     }else{
-      print('장바구니에 담긴 상품이 없습니다.!');
+      print('장바구니에 담긴 상품이 없습니다!');
     }
   }
 
