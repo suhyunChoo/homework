@@ -28,38 +28,43 @@ class ShoppingMall extends Product {
 
   //구매자가 구매하고 싶은 상품들을 장바구니에 담기
   void addToCart(){
-    int inputError =0;
+    int inputError = 0;
     print('상품 이름을 입력해 주세요!');
     String? inputItem = stdin.readLineSync();
     print('상품 개수를 입력해 주세요!');
     String? inputnum = stdin.readLineSync();
 
     for(var product in Product_list){
-
       if(inputItem==product.name){
         for(int i=0;i<int.parse(inputnum!);i++){
           cartList.add(product);
+          inputError++;
         }
         print('장바구니에 상품이 담겼어요');
-
-      }
-      else{
-        inputError++;
       }
     }
-    if(inputError>0){
-      print('입력값이 올바르지 않습니다.');
+    if(inputError == 0){
+      print('입력값이 잘못 되었습니다!');
     }
-    inputError = 0;
   }
 
   //장바구니에 담은 상품들의 총 가격 보기 
   void showTotal(){
     totalPrice = 0;
+    List<String> inCartList = [];
+    List<String> showCartList = [];
+
     for(var product in cartList){
       totalPrice += product.price;
+      inCartList.add(product.name);
     }
-    print('장바구니에 $totalPrice 원을 담으셨네요!');
+    showCartList = inCartList.toSet().toList();
+    if (totalPrice != 0){
+      print('장바구니에 $showCartList 가 담겨있네요. 총 $totalPrice 원 입니다!');
+
+    }else{
+      print('장바구니에 담긴 상품이 없습니다.!');
+    }
   }
 
 }
@@ -122,7 +127,18 @@ void main() {
         shoppingMall.showTotal();
         printProgram();
       case 4:
-        print('이용해주셔서 감사합니다!');
+        print('정말 종료하시겠습니까? 5를 입력하면 프로그램이 종료됩니다.');
+        String? input = stdin.readLineSync();
+        num = int.parse(input!);
+        if(num==5){
+          num=4;
+          print('이용해주셔서 감사합니다!');
+        }else{
+          printProgram();
+        }
+      case 6:
+        shoppingMall.cartList.clear();
+        print('장바구니가 초기화 되었습니다.');
       default:
         print('지원하지 않는 기능입니다. 다시 시도해주세요');
         printProgram();
